@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SolutionSync | Live IT Intelligence</title>
+    <title>SolutionSync | IT Intelligence Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -19,62 +20,136 @@
             --radius-card: 15px;
             --radius-pill: 100px;
         }
-        body { font-family: 'Inter', sans-serif; background-color: #FFFFFF; color: var(--dewa-text-900); -webkit-font-smoothing: antialiased; }
-        .dewa-card { background: #FFFFFF; border: 1px solid var(--dewa-border); border-radius: var(--radius-card); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); height: 100%; display: flex; flex-direction: column; }
-        .dewa-card:hover { background-color: var(--dewa-active-bg); border-color: var(--dewa-primary); transform: translateY(-4px); }
-        .btn-pill { background-color: var(--dewa-primary); color: white; border-radius: var(--radius-pill); padding: 10px 24px; font-weight: 600; font-size: 13px; display: inline-flex; align-items: center; gap: 8px; transition: background 0.3s ease; }
+        
+        /* LinkedIn-style soft background to make cards stand out */
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #F3F4F6; 
+            color: var(--dewa-text-900); 
+            -webkit-font-smoothing: antialiased; 
+        }
+
+        .dewa-card { 
+            background: #FFFFFF; 
+            border: 1px solid var(--dewa-border); 
+            border-radius: var(--radius-card); 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+            height: 100%; 
+            display: flex; 
+            flex-direction: column;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .dewa-card:hover { 
+            background-color: var(--dewa-active-bg); 
+            border-color: var(--dewa-primary); 
+            transform: translateY(-2px); 
+        }
+
+        .btn-pill { 
+            background-color: var(--dewa-primary); 
+            color: white; 
+            border-radius: var(--radius-pill); 
+            padding: 12px 24px; 
+            font-weight: 600; 
+            font-size: 14px; 
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center;
+            gap: 8px; 
+            transition: background 0.3s ease; 
+        }
+
         .btn-pill:hover { background-color: var(--dewa-primary-variant); }
-        .nav-header { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--dewa-lines); }
+
+        .nav-header { 
+            background: rgba(255, 255, 255, 0.98); 
+            backdrop-filter: blur(12px); 
+            border-bottom: 1px solid var(--dewa-lines); 
+        }
+
+        /* LinkedIn Style Expand Logic */
+        .description-container {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .description-container.expanded {
+            -webkit-line-clamp: unset;
+            display: block;
+        }
+
+        .see-more-btn {
+            color: var(--dewa-text-600);
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+            display: inline-block;
+            margin-top: 4px;
+        }
+
+        .see-more-btn:hover {
+            color: var(--dewa-primary);
+        }
+
         .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        
         @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         .refreshing i { animation: rotate 1s linear infinite; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: #D1D5DB; border-radius: 10px; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
 
-    <nav class="sticky top-0 z-50 nav-header px-6 py-4">
+    <nav class="sticky top-0 z-50 nav-header px-4 py-3 sm:px-6 sm:py-4">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="flex items-center gap-3">
-                <div class="bg-[#007560] rounded-lg p-2.5 shadow-sm">
-                    <i class="fas fa-microchip text-white text-lg"></i>
+                <div class="bg-[#007560] rounded-lg p-2 shadow-sm">
+                    <i class="fas fa-microchip text-white text-base"></i>
                 </div>
                 <div>
-                    <h1 class="text-xl font-bold tracking-tight text-[#222222] leading-none">SolutionSync</h1>
-                    <span class="text-[9px] uppercase tracking-[0.2em] font-bold text-[#6F6F6F]">Enterprise IT Intelligence</span>
+                    <h1 class="text-lg sm:text-xl font-bold tracking-tight text-[#222222] leading-none">SolutionSync</h1>
+                    <span class="text-[9px] uppercase tracking-[0.2em] font-bold text-[#6F6F6F] hidden xs:inline">Enterprise IT Intel</span>
                 </div>
             </div>
             
             <div class="flex items-center gap-4">
-                <div class="hidden sm:block text-right pr-4 border-r border-[#EFEFF1]">
+                <div class="hidden md:block text-right pr-4 border-r border-[#EFEFF1]">
                     <p class="text-[9px] font-bold text-[#6F6F6F] uppercase tracking-widest">Last Sync</p>
-                    <p id="sync-time" class="text-[11px] font-bold text-[#007560]">Initializing...</p>
+                    <p id="sync-time" class="text-[11px] font-bold text-[#007560]">Updating...</p>
                 </div>
-                <button onclick="fetchAllFeeds()" id="refresh-btn" class="w-10 h-10 flex items-center justify-center rounded-full border border-[#D7D7DF] hover:bg-[#EFEFF1]">
+                <button onclick="fetchAllFeeds()" id="refresh-btn" class="w-10 h-10 flex items-center justify-center rounded-full border border-[#D7D7DF] bg-white hover:bg-[#EFEFF1] transition-colors">
                     <i class="fas fa-sync-alt text-[#222222] text-xs"></i>
                 </button>
             </div>
         </div>
     </nav>
 
-    <main class="max-w-7xl mx-auto px-6 mt-12 mb-20 w-full">
-        <div class="mb-14 border-l-4 border-[#007560] pl-8">
-            <h2 id="welcome-msg" class="text-3xl md:text-4xl font-bold text-[#222222] mb-3 tracking-tight">AI & Technical Briefing</h2>
-            <p class="text-[#6F6F6F] max-w-2xl text-lg font-medium">Automated multi-source aggregation for team decision-making.</p>
+    <!-- px-2 on mobile for LinkedIn "wide" feel -->
+    <main class="max-w-7xl mx-auto px-2 sm:px-6 mt-8 sm:mt-12 mb-20 w-full">
+        <div class="mb-10 sm:mb-14 border-l-4 border-[#007560] pl-5 sm:pl-8">
+            <h2 id="welcome-msg" class="text-2xl sm:text-4xl font-bold text-[#222222] mb-2 tracking-tight">AI Briefing</h2>
+            <p class="text-[#6F6F6F] max-w-2xl text-base sm:text-lg font-medium leading-snug">Curated multi-source technical aggregation.</p>
         </div>
 
         <div id="loader" class="flex flex-col items-center justify-center py-24">
             <div class="w-10 h-10 border-4 border-[#E5F1EF] border-t-[#007560] rounded-full animate-spin"></div>
-            <p class="mt-4 text-[#6F6F6F] font-bold tracking-widest text-[10px] uppercase">Fetching Latest Intelligence...</p>
+            <p class="mt-4 text-[#6F6F6F] font-bold tracking-widest text-[10px] uppercase">Syncing Live Network...</p>
         </div>
 
-        <div id="news-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 opacity-0 transition-opacity duration-700"></div>
+        <!-- Smaller gap on mobile for better flow -->
+        <div id="news-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8 opacity-0 transition-opacity duration-700"></div>
     </main>
 
-    <footer class="bg-[#F2F3F3] border-t border-[#D7D7DF] py-12 px-6 mt-auto">
+    <footer class="bg-white border-t border-[#D7D7DF] py-10 px-6 mt-auto">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-[#6F6F6F] text-[10px] font-bold uppercase tracking-[0.2em]">
-            <p>&copy; <span id="year"></span> DEWA-STYLE MASTERFEED</p>
-            <span>Confidential Internal Use Only</span>
+            <p>&copy; <span id="year"></span> DEWA-STYLE HUB</p>
+            <span>Internal Intelligence Only</span>
         </div>
     </footer>
 
@@ -97,7 +172,6 @@
             refreshBtn.classList.add('refreshing');
 
             try {
-                // cache-control: no-cache ensures it fetches fresh data every time
                 const fetchPromises = RSS_SOURCES.map(source => 
                     fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(source.url)}&t=${Date.now()}`, { cache: "no-store" })
                     .then(res => res.json())
@@ -112,58 +186,77 @@
 
                 renderGrid(combined);
                 
-                // Update Sync Timestamp
                 const now = new Date();
-                syncTimeLabel.innerText = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                if(syncTimeLabel) syncTimeLabel.innerText = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                 
                 loader.classList.add('hidden');
                 grid.classList.remove('opacity-0');
                 grid.style.display = 'grid';
             } catch (err) {
                 console.error("Sync Error", err);
+                loader.innerHTML = `<p class="text-red-600 font-bold">Network error. Please refresh.</p>`;
             } finally {
                 refreshBtn.classList.remove('refreshing');
             }
         }
 
+        // Toggle function for "See more"
+        function toggleDescription(btn) {
+            const container = btn.previousElementSibling;
+            const isExpanded = container.classList.toggle('expanded');
+            btn.innerText = isExpanded ? 'Show less' : '...see more';
+        }
+
         function renderGrid(articles) {
             const grid = document.getElementById('news-grid');
-            grid.innerHTML = articles.map(item => `
+            grid.innerHTML = articles.map(item => {
+                const fullDesc = item.description.replace(/<[^>]*>?/gm, '').trim();
+                const isLong = fullDesc.length > 150;
+
+                return `
                 <article class="dewa-card overflow-hidden">
-                    <div class="relative h-48 overflow-hidden border-b border-[#EFEFF1] bg-[#F2F3F3]">
-                        <img src="${item.thumbnail || (item.enclosure && item.enclosure.link) || 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=400'}" class="w-full h-full object-cover grayscale-[20%] transition-all duration-500 hover:grayscale-0">
+                    <div class="relative h-56 sm:h-48 overflow-hidden border-b border-[#EFEFF1] bg-[#F2F3F3]">
+                        <img src="${item.thumbnail || (item.enclosure && item.enclosure.link) || 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=600'}" 
+                             class="w-full h-full object-cover grayscale-[20%] transition-all duration-700 hover:grayscale-0" alt="News Image">
                         <div class="absolute top-4 left-4">
                             <span class="bg-[#007560] text-white text-[9px] font-bold px-3 py-1.5 rounded-full uppercase tracking-widest shadow-sm">${item.sourceName}</span>
                         </div>
                     </div>
-                    <div class="p-8 flex flex-col flex-grow">
-                        <div class="flex items-center gap-2 mb-4 text-[10px] font-bold text-[#007560] uppercase tracking-widest">
-                            <span>Intelligence Report</span>
+                    
+                    <div class="p-5 sm:p-8 flex flex-col flex-grow">
+                        <div class="flex items-center gap-2 mb-3 text-[11px] font-bold text-[#007560] uppercase tracking-wider">
+                            <span>Intelligence Brief</span>
                             <span class="text-[#D7D7DF]">•</span>
                             <span class="text-[#6F6F6F]">${new Date(item.pubDate).toLocaleDateString('en-GB')}</span>
                         </div>
-                        <h3 class="text-lg font-bold text-[#222222] leading-tight mb-4 line-clamp-2 hover:text-[#007560] transition-colors">
+                        
+                        <h3 class="text-xl font-bold text-[#222222] leading-tight mb-4 line-clamp-2 hover:text-[#007560] transition-colors">
                             <a href="${item.link}" target="_blank">${item.title}</a>
                         </h3>
-                        <p class="text-[#6F6F6F] text-[13px] leading-relaxed mb-8 line-clamp-3 font-medium">
-                            ${item.description.replace(/<[^>]*>?/gm, '').substring(0, 150)}...
-                        </p>
-                        <div class="mt-auto pt-6 border-t border-[#EFEFF1] flex justify-between items-center">
-                            <span class="text-[10px] text-[#222222] font-bold uppercase tracking-tighter">Technical Intel</span>
-                            <a href="${item.link}" target="_blank" class="btn-pill">Analyze <i class="fas fa-chevron-right text-[10px]"></i></a>
+                        
+                        <div class="mb-8 flex-grow">
+                            <p class="description-container text-[#6F6F6F] text-[14px] sm:text-[15px] leading-relaxed font-medium">
+                                ${fullDesc}
+                            </p>
+                            ${isLong ? `<span class="see-more-btn" onclick="toggleDescription(this)">...see more</span>` : ''}
+                        </div>
+                        
+                        <div class="mt-auto pt-6 border-t border-[#EFEFF1]">
+                            <a href="${item.link}" target="_blank" class="btn-pill w-full sm:w-auto">
+                                Analyze Report <i class="fas fa-chevron-right text-[10px]"></i>
+                            </a>
                         </div>
                     </div>
                 </article>
-            `).join('');
+            `}).join('');
         }
 
-        // Auto-Welcome logic
         const hour = new Date().getHours();
-        const welcome = hour < 12 ? "Morning Briefing" : (hour < 17 ? "Afternoon Intel" : "Evening Report");
-        document.getElementById('welcome-msg').innerText = `AI & ${welcome}`;
+        const welcome = hour < 12 ? "Morning Brief" : (hour < 17 ? "Afternoon Intel" : "Evening Report");
+        document.getElementById('welcome-msg').innerText = `AI ${welcome}`;
         document.getElementById('year').innerText = new Date().getFullYear();
 
-        // Initial Load (Happens every time the link is opened)
+        // Start
         fetchAllFeeds();
     </script>
 </body>
